@@ -1,7 +1,11 @@
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+	
+	
+	
     if (msg.action === "badWebsite") {
 		
-		chrome.storage.sync.set({'issue': msg.value, 'domain': 'empty-domain'}, function() {
+		
+		chrome.storage.sync.set({'issue': msg.value, 'domain': 'empty-domain', 'punctaj': msg.count}, function() {
 		//
 		});
 	
@@ -17,14 +21,20 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 			
 			//alert("!!!! ATENTIE !!!!\nWebsite-ul este unul mailitos! Poate contine virusi!")
 		}
+		
+			if (msg.value === "clean") 
+		{
+			
+			chrome.browserAction.setIcon({path: "/icon/icon-safe.png"});
+		}
     
     } else {
 			
-			chrome.storage.sync.set({'issue': "", 'domain': 'empty-domain'}, function() {
+			chrome.storage.sync.set({'issue': "neutru", 'domain': 'empty-domain', 'punctaj': '0'}, function() {
 			//
 			});
 		
-			chrome.browserAction.setIcon({path: "/icon/icon-safe.png"});
+			chrome.browserAction.setIcon({path: "/icon/icon-128.png"});// neutru
 			}
 	
 });

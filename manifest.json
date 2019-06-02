@@ -4,10 +4,10 @@
   "name": "roGuard",
   "description": "hackout.ro",
   "version": "1.0.0",
-  "icons": { "64": "/icon/icon_64.png",
-			 "128": "/icon/icon_128.png"},
+  "icons": { "64": "/icon/icon-64.png",
+			 "128": "/icon/icon-128.png"},
   "browser_action": {
-    "default_icon": "/icon/icon_64.png",
+    "default_icon": "/icon/icon-128.png",
     "default_popup": "popup.html"
   },
   

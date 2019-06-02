@@ -27,11 +27,14 @@
 		<a href="#" target="_blank">
           <i class="fas fa-info"></i>
 		</a>
+		<a style="padding-left: 7px;"></a>
+		
 	</div>
   </div>
   
   
-  <div class="modal-content">
+  <div class="modal-content" id="modalcontent">
+  
   <p style="width: 100%;text-align: center;" id="url"></p>
   
   <div id="warning-sign">
@@ -46,34 +49,45 @@
 	<i class="fas fa-robot" style="font-size:40px;color: red;"></i>
   </div>
   
+   <div id="question-sign">
+	<i class="fas fa-question" style="font-size:40px;color:#808000	;"></i>
+  </div>
+  
     <p id="descriere">Site-ul nu a fost raportat!</p>
 	
-	<i class="fas fa-frown" style="font-size:20px;color: red;"></i> 
+	<i class="fas fa-smile-beam" style="font-size:10px;color: green;"></i>
 
-	<input type="range" min="1" max="100" value="10" class="slider" id="myRange" disabled=true>
+	<input type="range" min="1" max="10" value="" class="slider" id="myRange" disabled=true>
 
-	<i class="fas fa-smile-beam" style="font-size:20px;color: green;"></i>
-
+	<i class="fas fa-frown" style="font-size:10px;color: red;"></i> 
 	
   </div>
   
  
   
-  <div class="modal-icons">
+  <div class="modal-icons" id="modalicons">
     <div class="flex-container">
      
-      <div class="flex">
-        <a>
-          <i class="fas fa-thumbs-down tdown" id="downvoteButton"></i>
-        </a>
-      </div>
+    
 	  
 	   <div class="flex">
         <a>
           <i class="fas fa-thumbs-up tup" id="upvoteButton"></i>
         </a>
       </div>
+	  
+	    <div class="flex">
+        <a>
+          <i class="fas fa-thumbs-down tdown" id="downvoteButton"></i>
+        </a>
+      </div>
+	  
+	  
+	  
+
     </div>
+	
+	
   </div>
   
   <div class="modal-footer">
