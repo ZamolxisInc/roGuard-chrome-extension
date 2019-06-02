@@ -5,6 +5,7 @@ var user = '11dsav32f';
 
 
 
+
 if(domain == "zamolxis.org")
 {
 
@@ -14,6 +15,9 @@ if(domain == "zamolxis.org")
 	count: punctaj
 	});
 	
+	showModal(problema);
+	
+	
 }else{
 	
 	chrome.runtime.sendMessage({
@@ -21,6 +25,21 @@ if(domain == "zamolxis.org")
 		value: "clean",
 		count: punctaj
 	});	
+	
+}
+
+function showModal(problema)
+{
+	
+	//document.body.innerHTML += "
+	document.body.innerHTML += '<center><dialog>!!!!!ATENTIE!!!!!<br>Acest website a fost raportat ca: <b>'+problema+'</b><br><br><button>Inchide</button></dialog>';
+	var dialog = document.querySelector("dialog");
+	dialog.querySelector("button").addEventListener("click", function() {
+		dialog.close();
+		
+	})
+	dialog.showModal();
+
 	
 }
 

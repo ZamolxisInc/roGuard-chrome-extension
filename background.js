@@ -14,10 +14,12 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
         if (msg.value === "fakenews") 
 		{
 			
+			
 			//alert("!!!! ATENTIE !!!!\nWebsite-ul este marcat ca unul fals. Fake news!")
 		}
 		if (msg.value === "malware") 
 		{
+			
 			
 			//alert("!!!! ATENTIE !!!!\nWebsite-ul este unul mailitos! Poate contine virusi!")
 		}
@@ -74,6 +76,5 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
 		// });
 
 // });
-
 
 
