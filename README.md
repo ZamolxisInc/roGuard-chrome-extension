@@ -5,5 +5,6 @@ For Chrome/Opera and chromium based browsers
 
 Connected to a PHP API
 
+Based on community reviews
 
-*to be modified
+Able to detect Malware website, Fake News, Safe Websites or Neutre
