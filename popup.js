@@ -23,16 +23,16 @@ chrome.windows.getCurrent(function(window) {
 
 
 chrome.storage.sync.get(['issue', 'domain','punctaj'], function(items) {
-      //document['getElementById']('descriere').innerHTML = items['issue'];
-	  //document['getElementById']('url').innerHTML = items['domain'];
-	  var body = document.body;
-	 //alert(items['punctaj']);
-	 if(items['punctaj'] > 0){
-		document['getElementById']('myRange').value = items['punctaj'];
-	 }else
-	 {
-		 document['getElementById']('myRange').value = "5";
-	 }
+
+		 var body = document.body;
+		 if(items['punctaj'] != 0){
+			document['getElementById']('myRange').value = items['punctaj'];
+		 }else
+		 {
+			 document['getElementById']('myRange').value = "5";
+		 }
+		
+	 
 	  
 	  if(items['issue'] === "fakenews")
 	  {

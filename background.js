@@ -23,21 +23,31 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 			
 			//alert("!!!! ATENTIE !!!!\nWebsite-ul este unul mailitos! Poate contine virusi!")
 		}
-		
-			if (msg.value === "clean") 
-		{
-			
-			chrome.browserAction.setIcon({path: "/icon/icon-safe.png"});
-		}
     
-    } else {
+    } 
+	
+	if(msg.action === "goodWebsite"){
 			
-			chrome.storage.sync.set({'issue': "neutru", 'domain': 'empty-domain', 'punctaj': '0'}, function() {
+		if (msg.value === "neutru") 
+		{
+			chrome.storage.sync.set({'issue': msg.value, 'domain': 'empty-domain', 'punctaj': '5'}, function() {
 			//
 			});
-		
 			chrome.browserAction.setIcon({path: "/icon/icon-128.png"});// neutru
-			}
+			
+		}
+		
+		if (msg.value === "clean") 
+		{
+			chrome.storage.sync.set({'issue': msg.value, 'domain': 'empty-domain', 'punctaj': msg.count}, function() {
+			//
+			});
+			chrome.browserAction.setIcon({path: "/icon/icon-safe.png"});
+			
+		}
+		
+	}
+	
 	
 });
 
@@ -76,5 +86,8 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
 		// });
 
 // });
+
+
+
 
 
