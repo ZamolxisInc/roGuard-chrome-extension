@@ -25,7 +25,7 @@ function getData(url = '') {
 }
 
 
-getData('https://roguard.hackout.ro/checkDomain.php?domain=' + domain)
+getData('https://roguard.hackout.ro/checkDomain/' + domain)
   .then(data => {
 				console.log(JSON.stringify(data));
 				var problema = data.problema;
