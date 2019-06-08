@@ -33,7 +33,7 @@ getData('https://roguard.hackout.ro/checkDomain/' + domain)
 				var reason = data.reason;
 				var dataCalendar = data.datac;
 				var isIssueReceived = data.isIssue;
-				
+				var connection = data.connection; /// DEIMPEMENTAT DACA NU AVEM CONEXIUNE
 						
 					if(isIssueReceived === 1 && (problema === "fakenews" || problema === "malware"))
 					{
