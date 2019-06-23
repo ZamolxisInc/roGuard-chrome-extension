@@ -6,9 +6,10 @@ var dataCalendar;
 var isIssueReceived;
 
 
-
+// get json response
 function getData(url = '') {
     return fetch(url, {
+    	// ask server the check the domain
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, cors, *same-origin
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -25,38 +26,47 @@ function getData(url = '') {
 }
 
 
-getData('https://roguard.hackout.ro/checkDomain/' + domain)
+getData('http://127.0.0.1/checkDomain.php?domain=' + domain)
   .then(data => {
-				console.log(JSON.stringify(data));
+				//console.log(JSON.stringify(data));
 				var problema = data.problema;
 				var punctaj = data.count;
 				var reason = data.reason;
 				var dataCalendar = data.datac;
 				var isIssueReceived = data.isIssue;
 				var connection = data.connection; /// DEIMPEMENTAT DACA NU AVEM CONEXIUNE
+
+				if(connection === "failed"){
+					console.log("Connection FAILED.");
+					// trimitem la background.js 'no connection'
+					chrome.runtime.sendMessage({
+						action: 'no_connection', // de aduagat Cleean - apare modal pe clean - scos in alt message
+						value: problema,
+						count: punctaj
+						});
+				}
 						
-					if(isIssueReceived === 1 && (problema === "fakenews" || problema === "malware"))
+				else if(isIssueReceived === 1 && (problema === "fakenews" || problema === "malware"))
 					{
-						
+						console.log("SEND: goodWebsite.");
 						chrome.runtime.sendMessage({
 						action: 'badWebsite', // de aduagat Cleean - apare modal pe clean - scos in alt message
 						value: problema,
 						count: punctaj
 						});
 						
-						showModal(problema);
-						
-						
-					}else{
-						
-						chrome.runtime.sendMessage({
-							action: 'goodWebsite',
-							value: problema,
-							count: punctaj
-						});	
-						//showModal(problema);
-						
+						showModal(problema);	
 					}
+
+				else{
+					console.log("SEND: badWebsite.");
+					chrome.runtime.sendMessage({
+						action: 'goodWebsite',
+						value: problema,
+						count: punctaj
+					});	
+					//showModal(problema);
+				}
 			
 				}) // JSON-string from `response.json()` call
   .catch(error => console.error(error));
