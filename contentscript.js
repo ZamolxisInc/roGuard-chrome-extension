@@ -26,7 +26,7 @@ function getData(url = '') {
 }
 
 
-getData('http://127.0.0.1/checkDomain.php?domain=' + domain)
+getData('https://roguard.hackout.ro/checkDomain/' + domain)
   .then(data => {
 				//console.log(JSON.stringify(data));
 				var problema = data.problema;

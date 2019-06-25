@@ -19,9 +19,42 @@ chrome.windows.getCurrent(function(window) {
 
 
 
+document.addEventListener('DOMContentLoaded', function() {///detecteaza clickul pe voteUp
+    var link = document.getElementById('upvoteButton');
+    link.addEventListener('click', function() {
+        vote(true);///functia e mai jos
+    });
+});
 
+document.addEventListener('DOMContentLoaded', function() {///detecteaza clickul pe voteDown
+    var link = document.getElementById('downvoteButton');
+    link.addEventListener('click', function() {
+        vote(false);///functia e mai jos
+    });
+});
 
-
+///aici facem logica de vot ca sa nu facem cod duplicat
+function vote(positive){
+	
+	if(true)/// TODO - verificam daca IP-ul lui a mai votat domeniul
+	{
+		if(positive === true)
+		{
+			///a votat UP
+			document['getElementById']('upvoteButton').style.color = "green";
+			document['getElementById']('downvoteButton').style.color = "";
+			
+		}else if(positive === false)
+		{
+			///a votat DOwn
+			document['getElementById']('upvoteButton').style.color = "";
+			document['getElementById']('downvoteButton').style.color = "red";
+			window.location.href="downvote.html";
+		}
+			
+	}///nu facem else ca daca a votat deja ar trebui sa incarcam pe onLoad la Popup. 
+	
+}
 
 chrome.storage.sync.get(['issue', 'domain','punctaj'], function(items) {
 		// extrag punctajul si issue dupa domain
@@ -35,13 +68,15 @@ chrome.storage.sync.get(['issue', 'domain','punctaj'], function(items) {
 		
 	 
 	if (items['issue'] === "no_connection") {
-		console.log("[popup.js]: no_connection");
-		  document['getElementById']('descriere').innerHTML = "Nu exista conexiune cu serverul.";
+		  document['getElementById']('descriere').innerHTML = "<h1>Nu exista conexiune cu serverul.</h1>";
 		  document['getElementById']('safe-sign').style.display = "none";
 		  document['getElementById']('robot-sign').style.display = "none";
 		  document['getElementById']('question-sign').style.display = "none";
 		  document['getElementById']('modalicons').style.display = "none";
-		  //body.classList.add("body-gray");
+		  document['getElementById']('grade').style.display = "none";
+		  document['getElementById']('url').style.display = "none";
+		  document['getElementById']('warning-sign').style.padding = "25% 0 0 0";
+		  body.classList.add("body-gray");
 	}
 	  
 	  else if(items['issue'] === "fakenews")

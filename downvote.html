@@ -34,62 +34,30 @@
   
   
   <div class="modal-content" id="modalcontent">
-  
-  <p style="width: 100%;text-align: center; color:#00BFFF" id="url"></p>
-  
-  <div id="warning-sign">
-	<i class="fas fa-exclamation-triangle" style="font-size:40px;color: red;" ></i> 
-  </div>
-  
-  <div id="safe-sign">
-	<i class="fas fa-check-circle" style="font-size:40px;color: green;"></i>
-  </div>
-  
-    <div id="robot-sign">
-	<i class="fas fa-robot" style="font-size:40px;color: red;"></i>
-  </div>
-  
-   <div id="question-sign">
-	<i class="fas fa-question" style="font-size:40px;color:#808000	;"></i>
-  </div>
-  
-    <p id="descriere">Site-ul nu a fost raportat!</p>
+	  
+		<a href="popup.html" class="button" id="confirm-downvote" style="background-color:blue;">
+			<font color="white"><i class="fas fa-times fa-lg"></i></font>
+		</a>
+   
+	  <h2 id="info-downvote"  style="padding-top:25%">Ce problema ai intampinat pe acest site?</h2>
+	  <br>
+	  &nbsp;
+		 <select>
+		  <option value="fakenews">FakeNews</option>
+		  <option value="malware">Malware</option>
+		  <option value="altul">Alt motiv</option>
 
-		<div id="grade">
-			<i class="fas fa-smile-beam" style="font-size:10px;color: green;"></i>
-
-			<input type="range" min="1" max="10" value="" class="slider" id="myRange" disabled=true>
-
-			<i class="fas fa-frown" style="font-size:10px;color: red;"></i> 
-		</div>
-  </div>
-  
- 
-  
-  <div class="modal-icons" id="modalicons">
-    <div class="flex-container">
-     
-    
-	  
-	   <div class="flex">
-        <a>
-          <i class="fas fa-thumbs-up tup" id="upvoteButton"></i>
-        </a>
-      </div>
-	  
-	    <div class="flex">
-        <a>
-          <i class="fas fa-thumbs-down tdown" id="downvoteButton"></i>
-        </a>
-      </div>
-	  
-	  
-	  
-
-    </div>
-	
+		</select> 
+		&nbsp;
+		<br>
+		<br>
+		<a href class="button" id="confirm-downvote" style="background-color:red;">
+			<font color="white">Trimite</font>
+	   </a>
 	
   </div>
+  
+  
   
   <div class="modal-footer">
   <a href="https://hackout.ro" target="_blank" class="button">

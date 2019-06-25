@@ -5,7 +5,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 		chrome.storage.sync.set({'issue': "no_connection", 'domain': 'empty-domain', 'punctaj': msg.count}, function() {
 		});
 	
-		chrome.browserAction.setIcon({path: "/icon/exl.png"});
+		chrome.browserAction.setIcon({path: "/icon/icon-gray.png"});
 	}
 
     if (msg.action === "badWebsite") {	
