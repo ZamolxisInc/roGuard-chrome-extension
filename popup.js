@@ -78,10 +78,23 @@ chrome.storage.sync.get(['issue', 'domain','punctaj'], function(items) {
 		  document['getElementById']('warning-sign').style.padding = "25% 0 0 0";
 		  body.classList.add("body-gray");
 	}
-	  
-	  else if(items['issue'] === "fakenews")
+	
+		else if(items['issue'] === "banned")
 	  {
-	  	console.log("[popup.js]: fakenews");
+		  document['getElementById']('descriere').innerHTML = "<h1>Accesul tau a fost restrictionat!</h1><h4>Contacteaza-ne la contact@hackout.ro</h4>";
+		  document['getElementById']('safe-sign').style.display = "none";
+		  document['getElementById']('robot-sign').style.display = "none";
+		  document['getElementById']('question-sign').style.display = "none";
+		  document['getElementById']('modalicons').style.display = "none";
+		  document['getElementById']('grade').style.display = "none";
+		  document['getElementById']('url').style.display = "none";
+		  document['getElementById']('warning-sign').style.padding = "25% 0 0 0";
+		  body.classList.add("body-gray");
+		  
+	  }
+		else if(items['issue'] === "fakenews")
+	  {
+		console.log("[popup.js]: fakenews");
 		  document['getElementById']('descriere').innerHTML = "Site-ul a fost raportat ca fake news!";
 		  document['getElementById']('safe-sign').style.display = "none";
 		  document['getElementById']('robot-sign').style.display = "none";
@@ -89,7 +102,7 @@ chrome.storage.sync.get(['issue', 'domain','punctaj'], function(items) {
 		  body.classList.add("body-red");
 		  
 	  }
-	  else if(items['issue'] === "malware")
+		else if(items['issue'] === "malware")
 	  {console.log("[popup.js]: malware");
 		  document['getElementById']('descriere').innerHTML = "Site-ul a fost raportat ca malware!";
 		  document['getElementById']('safe-sign').style.display = "none";
@@ -97,8 +110,8 @@ chrome.storage.sync.get(['issue', 'domain','punctaj'], function(items) {
 		  document['getElementById']('question-sign').style.display = "none";
 		  body.classList.add("body-red");
 		 
-	
-	  }else if(items['issue'] === "clean")
+
+		}else if(items['issue'] === "clean")
 	  {console.log("[popup.js]: clean");
 		  document['getElementById']('descriere').innerHTML = "Site-ul este sigur!";
 		  document['getElementById']('robot-sign').style.display = "none";

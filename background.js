@@ -7,6 +7,13 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 	
 		chrome.browserAction.setIcon({path: "/icon/icon-gray.png"});
 	}
+	
+	if(msg.action === "banned") {
+		chrome.storage.sync.set({'issue': "banned", 'domain': 'empty-domain', 'punctaj': '5'}, function() {
+		});
+	
+		chrome.browserAction.setIcon({path: "/icon/icon-gray.png"});
+	}
 
     if (msg.action === "badWebsite") {	
 		chrome.storage.sync.set({'issue': msg.value, 'domain': 'empty-domain', 'punctaj': msg.count}, function() {

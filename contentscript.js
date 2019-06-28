@@ -35,7 +35,9 @@ getData('https://roguard.hackout.ro/checkDomain/' + domain)
 				var dataCalendar = data.datac;
 				var isIssueReceived = data.isIssue;
 				var connection = data.connection; /// DEIMPEMENTAT DACA NU AVEM CONEXIUNE
-
+				var banned = data.banned;
+				
+				
 				if(connection === "failed"){
 					console.log("Connection FAILED.");
 					// trimitem la background.js 'no connection'
@@ -45,10 +47,19 @@ getData('https://roguard.hackout.ro/checkDomain/' + domain)
 						count: punctaj
 						});
 				}
-						
+				
+				else if(banned === true)
+				{
+					console.log("SEND: banned.");
+					chrome.runtime.sendMessage({
+						action: 'banned',
+						value: 'bannedvalue',
+						count: '5'
+						});
+				}
 				else if(isIssueReceived === 1 && (problema === "fakenews" || problema === "malware"))
 					{
-						console.log("SEND: goodWebsite.");
+						
 						chrome.runtime.sendMessage({
 						action: 'badWebsite', // de aduagat Cleean - apare modal pe clean - scos in alt message
 						value: problema,
@@ -59,7 +70,7 @@ getData('https://roguard.hackout.ro/checkDomain/' + domain)
 					}
 
 				else{
-					console.log("SEND: badWebsite.");
+					
 					chrome.runtime.sendMessage({
 						action: 'goodWebsite',
 						value: problema,
