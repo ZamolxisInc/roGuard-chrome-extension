@@ -69,12 +69,12 @@ chrome.storage.sync.get(['issue', 'domain','punctaj'], function(items) {
 	 
 	if (items['issue'] === "no_connection") {
 		  document['getElementById']('descriere').innerHTML = "<h1>Nu exista conexiune cu serverul.</h1>";
-		  document['getElementById']('safe-sign').style.display = "none";
-		  document['getElementById']('robot-sign').style.display = "none";
-		  document['getElementById']('question-sign').style.display = "none";
-		  document['getElementById']('modalicons').style.display = "none";
-		  document['getElementById']('grade').style.display = "none";
-		  document['getElementById']('url').style.display = "none";
+		  document['getElementById']('safe-sign').remove();
+		  document['getElementById']('robot-sign').remove();
+		  document['getElementById']('question-sign').remove();
+		  document['getElementById']('modalicons').remove();
+		  document['getElementById']('grade').remove();
+		  document['getElementById']('url').remove();
 		  document['getElementById']('warning-sign').style.padding = "25% 0 0 0";
 		  body.classList.add("body-gray");
 	}
@@ -82,12 +82,12 @@ chrome.storage.sync.get(['issue', 'domain','punctaj'], function(items) {
 		else if(items['issue'] === "banned")
 	  {
 		  document['getElementById']('descriere').innerHTML = "<h1>Accesul tau a fost restrictionat!</h1><h4>Contacteaza-ne la contact@hackout.ro</h4>";
-		  document['getElementById']('safe-sign').style.display = "none";
-		  document['getElementById']('robot-sign').style.display = "none";
-		  document['getElementById']('question-sign').style.display = "none";
-		  document['getElementById']('modalicons').style.display = "none";
-		  document['getElementById']('grade').style.display = "none";
-		  document['getElementById']('url').style.display = "none";
+		  document['getElementById']('safe-sign').remove();
+		  document['getElementById']('robot-sign').remove();
+		  document['getElementById']('question-sign').remove();
+		  document['getElementById']('modalicons').remove();
+		  document['getElementById']('grade').remove();
+		  document['getElementById']('url').remove();
 		  document['getElementById']('warning-sign').style.padding = "25% 0 0 0";
 		  body.classList.add("body-gray");
 		  
@@ -96,36 +96,36 @@ chrome.storage.sync.get(['issue', 'domain','punctaj'], function(items) {
 	  {
 		console.log("[popup.js]: fakenews");
 		  document['getElementById']('descriere').innerHTML = "Site-ul a fost raportat ca fake news!";
-		  document['getElementById']('safe-sign').style.display = "none";
-		  document['getElementById']('robot-sign').style.display = "none";
-		  document['getElementById']('question-sign').style.display = "none";
+		  document['getElementById']('safe-sign').remove();
+		  document['getElementById']('robot-sign').remove();
+		  document['getElementById']('question-sign').remove();
 		  body.classList.add("body-red");
 		  
 	  }
 		else if(items['issue'] === "malware")
 	  {console.log("[popup.js]: malware");
 		  document['getElementById']('descriere').innerHTML = "Site-ul a fost raportat ca malware!";
-		  document['getElementById']('safe-sign').style.display = "none";
-		  document['getElementById']('warning-sign').style.display = "none";
-		  document['getElementById']('question-sign').style.display = "none";
+		  document['getElementById']('safe-sign').remove();
+		  document['getElementById']('warning-sign').remove();
+		  document['getElementById']('question-sign').remove();
 		  body.classList.add("body-red");
 		 
 
 		}else if(items['issue'] === "clean")
 	  {console.log("[popup.js]: clean");
 		  document['getElementById']('descriere').innerHTML = "Site-ul este sigur!";
-		  document['getElementById']('robot-sign').style.display = "none";
-		  document['getElementById']('warning-sign').style.display = "none";
-		  document['getElementById']('question-sign').style.display = "none";
+		  document['getElementById']('robot-sign').remove();
+		  document['getElementById']('warning-sign').remove();
+		  document['getElementById']('question-sign').remove();
 		  body.classList.add("body-green");
 		 
 		
 	  } else {
 		  console.log("[popup.js]: nu a fost raportat");
 		  document['getElementById']('descriere').innerHTML = "Nu a fost raportat inca! Fii primul care contribuie si voteaza mai jos!";
-		  document['getElementById']('warning-sign').style.display = "none";
-		  document['getElementById']('robot-sign').style.display = "none";
-		  document['getElementById']('safe-sign').style.display = "none";
+		  document['getElementById']('warning-sign').remove();
+		  document['getElementById']('robot-sign').remove();
+		  document['getElementById']('safe-sign').remove();
 		  body.classList.add("body-white");
 		  
 	  }
