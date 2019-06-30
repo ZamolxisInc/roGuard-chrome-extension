@@ -26,7 +26,8 @@ function getData(url = '') {
 }
 
 
-getData('https://roguard.hackout.ro/checkDomain/' + domain)
+
+getData('http://127.0.0.1/checkDomain.php?domain=' + domain)
   .then(data => {
 				//console.log(JSON.stringify(data));
 				var problema = data.problema;
@@ -34,7 +35,7 @@ getData('https://roguard.hackout.ro/checkDomain/' + domain)
 				var reason = data.reason;
 				var dataCalendar = data.datac;
 				var isIssueReceived = data.isIssue;
-				var connection = data.connection; /// DEIMPEMENTAT DACA NU AVEM CONEXIUNE
+				var connection = data.connection;
 				var banned = data.banned;
 				
 				
@@ -59,7 +60,7 @@ getData('https://roguard.hackout.ro/checkDomain/' + domain)
 				}
 				else if(isIssueReceived === 1 && (problema === "fakenews" || problema === "malware"))
 					{
-						
+						console.log("bad website.");
 						chrome.runtime.sendMessage({
 						action: 'badWebsite', // de aduagat Cleean - apare modal pe clean - scos in alt message
 						value: problema,
@@ -69,8 +70,8 @@ getData('https://roguard.hackout.ro/checkDomain/' + domain)
 						showModal(problema);	
 					}
 
-				else{
-					
+				else if(isIssueReceived === 0){
+					console.log("isIssueReceived ===0.");
 					chrome.runtime.sendMessage({
 						action: 'goodWebsite',
 						value: problema,
@@ -78,6 +79,15 @@ getData('https://roguard.hackout.ro/checkDomain/' + domain)
 					});	
 					//showModal(problema);
 				}
+				// else { // daca serverul nu e pornit popup tot afiseaza ca si cum ar fi ok
+				// 	console.log("Connection ERROR.");
+				// 	// trimitem la background.js 'no connection'
+				// 	chrome.runtime.sendMessage({
+				// 		action: 'no_connection', 
+				// 		value: problema,
+				// 		count: punctaj
+				// 		});
+				// }
 			
 				}) // JSON-string from `response.json()` call
   .catch(error => console.error(error));
@@ -88,7 +98,6 @@ getData('https://roguard.hackout.ro/checkDomain/' + domain)
 
 function showModal(problema)
 {
-	
 	//document.body.innerHTML += "
 	document.body.innerHTML += '<center><dialog>!!!!!ATENTIE!!!!!<br>Acest website a fost raportat ca: <b>'+problema+'</b><br><br><button>Inchide</button></dialog>';
 	var dialog = document.querySelector("dialog");
