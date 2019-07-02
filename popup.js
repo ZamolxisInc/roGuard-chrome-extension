@@ -44,7 +44,7 @@ chrome.storage.sync.get(['issue', 'domain','punctaj'], function(items) {
 		 else
 			 document['getElementById']('myRange').value = "5";
 		
-	 	switch(items['issue']){
+	 	switch(items['issue']) {
 	 		// le-am reasezat in changeSTATE
 	 		case "no_connection"  : changeState("no_connection_state"); break;
 	 		case "banned"         : changeState("banned_state");	    break;
@@ -54,27 +54,31 @@ chrome.storage.sync.get(['issue', 'domain','punctaj'], function(items) {
 	 		case "clean"		  : changeState("clean_state");			break;
 	 		default /*nu a votat*/: changeState("not_reported_state"); 	break;
 	 	}
+});
 
-	 	// verificam daca a votat si facem update
-	 	//if(checkVoteByIP() === 'up') votedUP(); //a votat up, afisam mesaj
-	 	//else if(checkVoteByIP() === "down") votedDOWN;
+
+// check if user voted this domain before
+chrome.storage.sync.get(['voted', 'domain','value'], function(items) {
+	console.log("Received voted response: " + items['voted'] + " " + items['domain'] + " " + items['value']);
+	var body = document.body;
+	if(items['voted'] === "voted"){
+		// punctaj = clean / malware / fakenews
+		if(items['value'] === 'clean') votedUP();
+		else votedDOWN(items['value']);
+	}
 });
 
 
 
 
 /* ==== Functii ====*/
-
-///aici facem logica de vot ca sa nu facem cod duplicat
 function vote(positive){
-	if(checkVoteByIP() === "no_vote")/// TODO - verificam daca IP-ul lui a mai votat domeniul
-	{
-		if(positive === true) 
-			votedUP();
-		else if(positive === false)
-			votedDOWN();
-		// votedUP si DOWN trebuie doar sa adauge peste html-ul existent un text		
-	}///nu facem else ca daca a votat deja ar trebui sa incarcam pe onLoad la Popup. 	
+	if(positive === true) 
+		votedUP();
+	else if(positive === false){
+		window.location.href="downvote.html"; //trebuie creat dinamic
+	}
+	// votedUP si DOWN trebuie doar sa adauge peste html-ul existent un text			
 }
 
 
@@ -159,6 +163,28 @@ function changeState(param){
 
 
 
+// updatam popup.html in functie de cum a votat
+function votedUP() {
+	///a votat UP
+	var vote_description = document['getElementById']('vote_description');
+	document['getElementById']('upvoteButton').style.color = "green";
+	document['getElementById']('downvoteButton').style.color = "";
+	vote_description.innerHTML = "Ati raportat acest site ca fiind: " +
+							"CLEAN" + // aici trebuie creat dinamic
+							". Multumim pentru implicare!";
+}	
+
+function votedDOWN(issue) {
+	///a votat DOWN
+	var vote_description = document['getElementById']('vote_description');
+	document['getElementById']('upvoteButton').style.color = "";
+	document['getElementById']('downvoteButton').style.color = "red";
+	vote_description.innerHTML = "Ati raportat acest site ca fiind: " +
+							issue + // aici trebuie creat dinamic
+							". Multumim pentru implicare!";
+}	
+
+
 // post {domain:..., issue:..., reason:..., ip:...}
 function postData(url = '', data = {}) {
   // Default options are marked with *
@@ -178,37 +204,6 @@ function postData(url = '', data = {}) {
     .then(response => response.json()); // parses JSON response into native JavaScript objects 
 }
 
-
-
-function checkVoteByIP(){ // TODO: de implementat
-	return "no_vote";
-	// "up" daca a votat up
-	// "down" pentru down
-}
-
-
-
-function votedUP() {
-	///a votat UP
-	var descriere = document['getElementById']('descriere');
-	document['getElementById']('upvoteButton').style.color = "green";
-	document['getElementById']('downvoteButton').style.color = "";
-	descriere.innerHTML = "Ati raportat acest site ca fiind: " +
-							"CLEAN" + // aici trebuie creat dinamic
-							". Multumim pentru implicare!";
-}	
-
-
-
-function votedDOWN() {
-	///a votat DOWN
-	document['getElementById']('upvoteButton').style.color = "";
-	document['getElementById']('downvoteButton').style.color = "red";
-	window.location.href="downvote.html"; //trebuie creat dinamic
-	// TODO post req cu vote up pentru domeniul x, ip y, etc
-}	
-
 /* TODOS:
 	1. api post request pentru voturi
-	2. verificam daca a votat: checkVoteByIP()
 */

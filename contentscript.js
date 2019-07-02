@@ -5,7 +5,6 @@ var reason;
 var dataCalendar;
 var isIssueReceived;
 
-
 // get json response
 function getData(url = '') {
     return fetch(url, {
@@ -26,7 +25,7 @@ function getData(url = '') {
 }
 
 
-
+// api check domain
 getData('http://127.0.0.1/checkDomain.php?domain=' + domain)
   .then(data => {
 				//console.log(JSON.stringify(data));
@@ -37,7 +36,6 @@ getData('http://127.0.0.1/checkDomain.php?domain=' + domain)
 				var isIssueReceived = data.isIssue;
 				var connection = data.connection;
 				var banned = data.banned;
-				
 				
 				if(connection === "failed"){
 					console.log("Connection FAILED.");
@@ -56,15 +54,15 @@ getData('http://127.0.0.1/checkDomain.php?domain=' + domain)
 						action: 'banned',
 						value: 'bannedvalue',
 						count: '5'
-						});
+					});
 				}
 				else if(isIssueReceived === 1 && (problema === "fakenews" || problema === "malware"))
 					{
 						console.log("bad website.");
 						chrome.runtime.sendMessage({
-						action: 'badWebsite', // de aduagat Cleean - apare modal pe clean - scos in alt message
-						value: problema,
-						count: punctaj
+							action: 'badWebsite', // de aduagat Cleean - apare modal pe clean - scos in alt message
+							value: problema,
+							count: punctaj
 						});
 						
 						showModal(problema);	
@@ -77,7 +75,6 @@ getData('http://127.0.0.1/checkDomain.php?domain=' + domain)
 						value: problema,
 						count: punctaj
 					});	
-					//showModal(problema);
 				}
 				// else { // daca serverul nu e pornit popup tot afiseaza ca si cum ar fi ok
 				// 	console.log("Connection ERROR.");
@@ -88,11 +85,47 @@ getData('http://127.0.0.1/checkDomain.php?domain=' + domain)
 				// 		count: punctaj
 				// 		});
 				// }
-			
 				}) // JSON-string from `response.json()` call
   .catch(error => console.error(error));
   
 
+
+// api CHECK VOTE
+getData('https://roguard.hackout.ro/checkVote/' + domain)
+  .then(data => 
+   {
+  				var connection = data.connection;
+				var voted = data.voted; 	// poate fi true/false
+				var issue = data.problema;  // clean/neutru/malware/fakenews
+				console.log("Domeniul este:" + domain);
+				console.log("Connection este:" + connection);
+				console.log("Voted este:" + voted);
+				console.log("Issue este:" + issue);
+
+				if(connection === false){ // no_connection
+					chrome.runtime.sendMessage({
+						action: 'no_connection',
+						value: issue // trimitem ca 'value' ce a votat
+					});
+				}
+				// verificam INDEPENDENT daca a votat deja si trimitem intr-un nou message:
+				else if(voted === true){ // daca a votat deja
+					console.log("Voted Already on this domain: " + domain);
+					chrome.runtime.sendMessage({
+						action: 'voted',
+						value: issue // trimitem ca 'value' ce a votat
+					});
+				}
+				else{
+					console.log("No votes on this domain: " + domain);
+					chrome.runtime.sendMessage({
+						action: 'not_voted',
+						value: 0
+					});
+				}
+	}) // JSON-string from `response.json()` call
+  .catch(error => console.error(error));
+  
 
 
 

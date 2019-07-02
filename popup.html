@@ -14,91 +14,84 @@
 </head>
 
 <body>
+  <!-- HEADER -->
   <div class="modal-header">
     <h1 class="logo">
       <img class="logo-icon" src="images/logo.png">
-		roGuard
+		  roGuard
     </h1>
 
-	<div class="settings">
-		<a href="#" target="_blank">
-          <i class="fas fa-cog"></i>
-		</a>
-		<a href="#" target="_blank">
-          <i class="fas fa-info"></i>
-		</a>
-		<a style="padding-left: 7px;"></a>
-		
-	</div>
+  	<div class="settings">
+  		<a href="#" target="_blank">
+            <i class="fas fa-cog"></i>
+  		</a>
+  		<a href="#" target="_blank">
+            <i class="fas fa-info"></i>
+  		</a>
+  		<a style="padding-left: 7px;"></a>
+  	</div>
   </div>
   
-  
+  <!-- CONTENT -->
   <div class="modal-content" id="modalcontent">
-  
-  <p style="width: 100%;text-align: center; color:#00BFFF" id="url"></p>
-  
-  <div id="warning-sign">
-	<i class="fas fa-exclamation-triangle" style="font-size:40px;color: red;" ></i> 
-  </div>
-  
-  <div id="safe-sign">
-	<i class="fas fa-check-circle" style="font-size:40px;color: green;"></i>
-  </div>
-  
-    <div id="robot-sign">
-	<i class="fas fa-robot" style="font-size:40px;color: red;"></i>
-  </div>
-  
-   <div id="question-sign">
-	<i class="fas fa-question" style="font-size:40px;color:#808000	;"></i>
-  </div>
-  
-    <p id="descriere">Site-ul nu a fost raportat!</p>
+      <p style="width: 100%;text-align: center; color:#00BFFF" id="url"></p>
+      
+      <div id="warning-sign">
+    	 <i class="fas fa-exclamation-triangle" style="font-size:40px;color: red;" ></i> 
+      </div>
+      
+      <div id="safe-sign">
+    	 <i class="fas fa-check-circle" style="font-size:40px;color: green;"></i>
+      </div>
+      
+      <div id="robot-sign">
+    	 <i class="fas fa-robot" style="font-size:40px;color: red;"></i>
+      </div>
+      
+      <div id="question-sign">
+    	 <i class="fas fa-question" style="font-size:40px;color:#808000	;"></i>
+      </div>
+      
+      <p id="descriere">Site-ul nu a fost raportat!</p>
 
-		<div id="grade">
-			<i class="fas fa-smile-beam" style="font-size:10px;color: green;"></i>
+  		<div id="grade">
+  			<i class="fas fa-smile-beam" style="font-size:10px;color: green;"></i>
 
-			<input type="range" min="1" max="10" value="" class="slider" id="myRange" disabled=true>
+  			<input type="range" min="1" max="10" value="" class="slider" id="myRange" disabled=true>
 
-			<i class="fas fa-frown" style="font-size:10px;color: red;"></i> 
-		</div>
+  			<i class="fas fa-frown" style="font-size:10px;color: red;"></i> 
+  		</div>
+
   </div>
   
  
   
   <div class="modal-icons" id="modalicons">
-    <div class="flex-container">
-     
-    
-	  
-	   <div class="flex">
-        <a>
-          <i class="fas fa-thumbs-up tup" id="upvoteButton"></i>
-        </a>
+      <div class="flex-container">
+    	    <div class="flex">
+            <a>
+              <i class="fas fa-thumbs-up tup" id="upvoteButton"></i>
+            </a>
+          </div>
+    	  
+    	    <div class="flex">
+            <a>
+              <i class="fas fa-thumbs-down tdown" id="downvoteButton"></i>
+            </a>
+          </div>
       </div>
-	  
-	    <div class="flex">
-        <a>
-          <i class="fas fa-thumbs-down tdown" id="downvoteButton"></i>
-        </a>
-      </div>
-	  
-	  
-	  
-
-    </div>
-	
-	
+      <p id="vote_description" style="text-align: center; vertical-align: middle"></p>
   </div>
   
+  <!-- FOOTER -->
   <div class="modal-footer">
-  <a href="https://hackout.ro" target="_blank" class="button">
-        <font color="white"> <i class="fas fa-home"></i> Portal</font>
-   </a>
+    <a href="https://hackout.ro" target="_blank" class="button">
+          <font color="white"> <i class="fas fa-home"></i> Portal</font>
+    </a>
  
-  <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K4AVNWQK37EPC&source=url" target="_blank" class="button"  style="background-color:green;">
-          <font color="white"><i class="fas fa-money-bill-wave"></i> Doneaza</font>
-   </a>
+    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K4AVNWQK37EPC&source=url" target="_blank" class="button"  style="background-color:green;">
+            <font color="white"><i class="fas fa-money-bill-wave"></i> Doneaza</font>
+    </a>
   </div>
   
 </body>

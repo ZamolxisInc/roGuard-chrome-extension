@@ -52,7 +52,6 @@ h1 {
   color: #2f5876;
 }
 
-
 h2 {
   font-family: 'Helvetica', monospace;
   font-size: 18px;
@@ -96,7 +95,7 @@ img {
 }
 
 .modal-footer {
-	position:absolute;
+	position:relative;
 	width:100%;
     height: 30px;
     padding-bottom:0px;
