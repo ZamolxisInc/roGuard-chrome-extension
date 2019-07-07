@@ -1,6 +1,8 @@
 var outUrl;
 var state;
-//state il folosim ca sa stim ce elemente sa afisam in functie de issue
+var voteState = "not_voted";
+// state il folosim ca sa stim ce elemente sa afisam in functie de issue
+// votestate il folosim ca sa retinem dupa ce facem checkVote daca a votat
 
 
 /* ===== EXECUTE ===== */
@@ -35,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {///detecteaza clickul 
 });
 
 
+/*-- SYNC --*/
 // check and update state
 chrome.storage.sync.get(['issue', 'domain','punctaj'], function(items) {
 		// extrag punctajul si issue dupa domain
@@ -56,31 +59,37 @@ chrome.storage.sync.get(['issue', 'domain','punctaj'], function(items) {
 	 	}
 });
 
-
 // check if user voted this domain before
-chrome.storage.sync.get(['voted', 'domain','value'], function(items) {
-	console.log("Received voted response: " + items['voted'] + " " + items['domain'] + " " + items['value']);
-	var body = document.body;
-	if(items['voted'] === "voted"){
-		// punctaj = clean / malware / fakenews
-		if(items['value'] === 'clean') votedUP();
-		else votedDOWN(items['value']);
-	}
-});
+checkVote();
+
+
+
 
 
 
 
 /* ==== Functii ====*/
 function vote(positive){
-	if(positive === true) 
+	if(positive === true) {
+		if (voteState === "voted_down" || voteState === "not_voted"){
+			// logica pentru sendVote(voteup);
+			var data = createDATA(outUrl, "clean", "");
+			var url = 'https:roguard.hackout.ro/voteDomain/';
+			try{
+				postData(url, data)
+				.then(data => { alert("positive vote has been registered!!"); });
+			}catch(error){
+				alert("Vote up FAILED"); 
+			}
+		}
+		// else nu mai afisam nimic daca apasa pe UP si votase deja up
 		votedUP();
+	}
 	else if(positive === false){
-		window.location.href="downvote.html"; //trebuie creat dinamic
+		window.location.href="downvote.html";
 	}
 	// votedUP si DOWN trebuie doar sa adauge peste html-ul existent un text			
 }
-
 
 
 // schimb state-ul in functie de issue
@@ -162,7 +171,6 @@ function changeState(param){
 }
 
 
-
 // updatam popup.html in functie de cum a votat
 function votedUP() {
 	///a votat UP
@@ -185,7 +193,29 @@ function votedDOWN(issue) {
 }	
 
 
-// post {domain:..., issue:..., reason:..., ip:...}
+// folosesc api de checkvote
+function checkVote(){
+	chrome.storage.sync.get(['voted', 'domain','value'], function(items) {
+		console.log("Received voted response: " + items['voted'] + " " + items['domain'] + " " + items['value']);
+		var body = document.body;
+		if(items['voted'] === "voted"){
+			// punctaj = clean / malware / fakenews
+			if(items['value'] === 'clean') {
+				voteState = "voted_up;"
+				votedUP();
+			}
+			else {
+				voteState = "voted_down";
+				votedDOWN(items['value']);
+			}
+		}
+		else//did not vote
+			voteState = "not_voted";
+	});
+}
+
+
+// post {domain:..., issue:..., reason:...}
 function postData(url = '', data = {}) {
   // Default options are marked with *
     return fetch(url, {
@@ -194,16 +224,22 @@ function postData(url = '', data = {}) {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
             // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         redirect: 'follow', // manual, *follow, error
         referrer: 'no-referrer', // no-referrer, *client
-        body: JSON.stringify(data), // body data type must match "Content-Type" header
+        body: data,//JSON.stringify(data), // body data type must match "Content-Type" header
     })
-    .then(response => response.json()); // parses JSON response into native JavaScript objects 
+    .then(response => response.json()) // parses JSON response into native JavaScript objects 
+    //.then(response => console.log("POST: Success"))
+    .catch(error => console.error("POST: Error"));
 }
 
-/* TODOS:
-	1. api post request pentru voturi
-*/
+
+// create data for request body
+function createDATA(domain, issue, reason){
+	return  "domain=" + domain +
+			"&issue=" + issue +
+			"&reason=" + reason;
+}

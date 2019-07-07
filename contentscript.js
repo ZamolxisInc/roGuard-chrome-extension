@@ -26,7 +26,7 @@ function getData(url = '') {
 
 
 // api check domain
-getData('http://127.0.0.1/checkDomain.php?domain=' + domain)
+getData('https:roguard.hackout.ro/checkDomain/domain=' + domain)
   .then(data => {
 				//console.log(JSON.stringify(data));
 				var problema = data.problema;
@@ -129,8 +129,7 @@ getData('https://roguard.hackout.ro/checkVote/' + domain)
 
 
 
-function showModal(problema)
-{
+function showModal(problema) {
 	//document.body.innerHTML += "
 	document.body.innerHTML += '<center><dialog>!!!!!ATENTIE!!!!!<br>Acest website a fost raportat ca: <b>'+problema+'</b><br><br><button>Inchide</button></dialog>';
 	var dialog = document.querySelector("dialog");
@@ -138,9 +137,7 @@ function showModal(problema)
 		dialog.close();
 		
 	})
-	dialog.showModal();
-
-	
+	dialog.showModal();	
 }
 
 
