@@ -1,11 +1,12 @@
 var outUrl;
 var state;
-var voteState = "not_voted";
+var voteState = "not_voted";//voted_up voted_down sau not_voted
 // state il folosim ca sa stim ce elemente sa afisam in functie de issue
 // votestate il folosim ca sa retinem dupa ce facem checkVote daca a votat
+contorVotUP = 0;
+contorVotDOWN = 0;
 
-
-/* ===== EXECUTE ===== */
+/* domeniul ce apare sus in popup - domain grab by chr*/
 chrome.windows.getCurrent(function(window) {
     // get the current active tab in that window
     chrome.tabs.query({
@@ -25,14 +26,40 @@ chrome.windows.getCurrent(function(window) {
 document.addEventListener('DOMContentLoaded', function() {///detecteaza clickul pe voteUp
     var link = document.getElementById('upvoteButton');
     link.addEventListener('click', function() {
-        vote(true);
+		
+		if (voteState === "not_voted"){
+			vote(true);
+		}else if(voteState === "voted_down"){
+			var vote_description = document['getElementById']('vote_description').innerHTML = "Ai votat deja! Esti sigur ca vrei sa schimbi votul?";
+			contorVotUP++;
+			if(contorVotUP >= 2)
+			{
+				var vote_description = document['getElementById']('vote_description').innerHTML = "Votul tau a fost schimbat!";
+				vote(true);
+				votedUP();
+			}
+		}
+		
+
     });
 });
 
 document.addEventListener('DOMContentLoaded', function() {///detecteaza clickul pe voteDown
     var link = document.getElementById('downvoteButton');
     link.addEventListener('click', function() {
-        vote(false);
+		if (voteState === "not_voted"){
+			vote(false);
+		}else if(voteState === "voted_up"){	
+			var vote_description = document['getElementById']('vote_description').innerHTML = "Ai votat deja! Esti sigur ca vrei sa schimbi votul?";
+			contorVotDOWN++;
+			if(contorVotDOWN >= 2)
+			{
+				window.location.href="downvote.html";
+				var vote_description = document['getElementById']('vote_description').innerHTML = "Votul tau a fost schimbat!";
+				votedDOWN("periculos");
+				vote(false);
+			}
+		}
     });	
 });
 
@@ -61,35 +88,54 @@ chrome.storage.sync.get(['issue', 'domain','punctaj'], function(items) {
 
 // check if user voted this domain before
 checkVote();
-
-
-
-
-
+// folosesc api de checkvote la pornire ca sa modificam butoanele in functie de votat sau nu deja
+function checkVote(){
+	chrome.storage.sync.get(['voted', 'domain','value'], function(items) {
+		var body = document.body;
+		if(items['voted'] === "voted"){
+			if(items['value'] === 'clean') {
+				voteState = "voted_up";
+				votedUP();
+			}
+			else {
+				voteState = "voted_down";
+				votedDOWN(items['value']);
+			}
+		}
+		else//did not vote
+			voteState = "not_voted";
+	});
+}
 
 
 /* ==== Functii ====*/
-function vote(positive){
+function vote(positive){//functia care se apeleaza la apasarea butoanelor
 	if(positive === true) {
-		if (voteState === "voted_down" || voteState === "not_voted"){
+		if (voteState === "voted_down" || voteState === "not_voted"){//adica daca nu a votat sau a votat altceva
 			// logica pentru sendVote(voteup);
-			var data = createDATA(outUrl, "clean", "");
-			var url = 'https:roguard.hackout.ro/voteDomain/';
+			var data = "domain=" + outUrl +
+						"&issue=" + "clean" +
+						"&reason=" + "";
+			var url = 'https://roguard.hackout.ro/voteDomain/';
 			try{
 				postData(url, data)
-				.then(data => { alert("positive vote has been registered!!"); });
+				.then(data => { votedUP(); });
 			}catch(error){
 				alert("Vote up FAILED"); 
 			}
 		}
-		// else nu mai afisam nimic daca apasa pe UP si votase deja up
 		votedUP();
+		// else nu mai afisam nimic daca apasa pe UP si votase deja up
+		
 	}
 	else if(positive === false){
 		window.location.href="downvote.html";
+		votedDOWN();
 	}
-	// votedUP si DOWN trebuie doar sa adauge peste html-ul existent un text			
+	// votedUP si DOWN trebuie doar sa adauge peste html-ul existent un text	
+	checkVote();	
 }
+
 
 
 // schimb state-ul in functie de issue
@@ -126,7 +172,7 @@ function changeState(param){
 
 		case "clean_state": 
 			  state = "clean";
-		      console.log("[popup.js]: clean");
+		      
 			  document['getElementById']('descriere').innerHTML = "Site-ul este sigur!";
 			  document['getElementById']('robot-sign').remove();
 			  document['getElementById']('warning-sign').remove();
@@ -136,18 +182,18 @@ function changeState(param){
 
 		case "malware_state":
 			  state = "malware";
-		  	  console.log("[popup.js]: malware");
-			  document['getElementById']('descriere').innerHTML = "Site-ul a fost raportat ca malware!";
+		  	  
+			  document['getElementById']('descriere').innerHTML = "Site-ul poate contine virusi/malware!";
 			  document['getElementById']('safe-sign').remove();
 			  document['getElementById']('warning-sign').remove();
 			  document['getElementById']('question-sign').remove();
-			  body.classList.add("body-red");
+			  body.classList.add("body-red"); 
 			break;
 
 		case "fakenews_state":
 			  state = "fakenews";
-			  console.log("[popup.js]: fakenews");
-			  document['getElementById']('descriere').innerHTML = "Site-ul a fost raportat ca fake news!";
+			
+			  document['getElementById']('descriere').innerHTML = "Site-ul poate contine stiri false!";
 			  document['getElementById']('safe-sign').remove();
 			  document['getElementById']('robot-sign').remove();
 			  document['getElementById']('question-sign').remove();
@@ -155,12 +201,12 @@ function changeState(param){
 			break;
 
 		case "alt_motiv_state":
-			console.log("[popup.js]: ALT_MOTIV_STATE");
+			
 			break;
 
 		case "not_reported_state":
 			 state = "not_reported";
-			  console.log("[popup.js]: nu a fost raportat");
+			 
 			  document['getElementById']('descriere').innerHTML = "Nu a fost raportat inca! Fii primul care contribuie si voteaza mai jos!";
 			  document['getElementById']('warning-sign').remove();
 			  document['getElementById']('robot-sign').remove();
@@ -173,17 +219,18 @@ function changeState(param){
 
 // updatam popup.html in functie de cum a votat
 function votedUP() {
-	///a votat UP
+	//a votat UP
 	var vote_description = document['getElementById']('vote_description');
 	document['getElementById']('upvoteButton').style.color = "green";
 	document['getElementById']('downvoteButton').style.color = "";
 	vote_description.innerHTML = "Ati raportat acest site ca fiind: " +
-							"CLEAN" + // aici trebuie creat dinamic
+							"LEGITIM" + // aici trebuie creat dinamic
 							". Multumim pentru implicare!";
+
 }	
 
 function votedDOWN(issue) {
-	///a votat DOWN
+	//a votat DOWN
 	var vote_description = document['getElementById']('vote_description');
 	document['getElementById']('upvoteButton').style.color = "";
 	document['getElementById']('downvoteButton').style.color = "red";
@@ -193,26 +240,7 @@ function votedDOWN(issue) {
 }	
 
 
-// folosesc api de checkvote
-function checkVote(){
-	chrome.storage.sync.get(['voted', 'domain','value'], function(items) {
-		console.log("Received voted response: " + items['voted'] + " " + items['domain'] + " " + items['value']);
-		var body = document.body;
-		if(items['voted'] === "voted"){
-			// punctaj = clean / malware / fakenews
-			if(items['value'] === 'clean') {
-				voteState = "voted_up;"
-				votedUP();
-			}
-			else {
-				voteState = "voted_down";
-				votedDOWN(items['value']);
-			}
-		}
-		else//did not vote
-			voteState = "not_voted";
-	});
-}
+
 
 
 // post {domain:..., issue:..., reason:...}
@@ -236,10 +264,19 @@ function postData(url = '', data = {}) {
     .catch(error => console.error("POST: Error"));
 }
 
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
 
-// create data for request body
-function createDATA(domain, issue, reason){
-	return  "domain=" + domain +
-			"&issue=" + issue +
-			"&reason=" + reason;
+function refreshPage(){
+	sleep(1000);
+		chrome.tabs.getSelected(null, function(tab) {
+	  var code = 'window.location.reload();';
+	  chrome.tabs.executeScript(tab.id, {code: code});
+	});
 }

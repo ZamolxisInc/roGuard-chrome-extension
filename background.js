@@ -69,7 +69,7 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
 	}, function(tabs) {
 
 
-	chrome.tabs.executeScript({
+		chrome.tabs.executeScript({
 			file: 'contentscript.js' // asta e ca sa se schimbe iconul cand schimb tabul
 		});
 	});

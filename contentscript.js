@@ -26,7 +26,7 @@ function getData(url = '') {
 
 
 // api check domain
-getData('https:roguard.hackout.ro/checkDomain/domain=' + domain)
+getData('https://roguard.hackout.ro/checkDomain/' + domain)
   .then(data => {
 				//console.log(JSON.stringify(data));
 				var problema = data.problema;
@@ -38,7 +38,6 @@ getData('https:roguard.hackout.ro/checkDomain/domain=' + domain)
 				var banned = data.banned;
 				
 				if(connection === "failed"){
-					console.log("Connection FAILED.");
 					// trimitem la background.js 'no connection'
 					chrome.runtime.sendMessage({
 						action: 'no_connection', // de aduagat Cleean - apare modal pe clean - scos in alt message
@@ -49,7 +48,6 @@ getData('https:roguard.hackout.ro/checkDomain/domain=' + domain)
 				
 				else if(banned === true)
 				{
-					console.log("SEND: banned.");
 					chrome.runtime.sendMessage({
 						action: 'banned',
 						value: 'bannedvalue',
@@ -58,7 +56,6 @@ getData('https:roguard.hackout.ro/checkDomain/domain=' + domain)
 				}
 				else if(isIssueReceived === 1 && (problema === "fakenews" || problema === "malware"))
 					{
-						console.log("bad website.");
 						chrome.runtime.sendMessage({
 							action: 'badWebsite', // de aduagat Cleean - apare modal pe clean - scos in alt message
 							value: problema,
@@ -69,7 +66,6 @@ getData('https:roguard.hackout.ro/checkDomain/domain=' + domain)
 					}
 
 				else if(isIssueReceived === 0){
-					console.log("isIssueReceived ===0.");
 					chrome.runtime.sendMessage({
 						action: 'goodWebsite',
 						value: problema,
@@ -97,10 +93,6 @@ getData('https://roguard.hackout.ro/checkVote/' + domain)
   				var connection = data.connection;
 				var voted = data.voted; 	// poate fi true/false
 				var issue = data.problema;  // clean/neutru/malware/fakenews
-				console.log("Domeniul este:" + domain);
-				console.log("Connection este:" + connection);
-				console.log("Voted este:" + voted);
-				console.log("Issue este:" + issue);
 
 				if(connection === false){ // no_connection
 					chrome.runtime.sendMessage({
@@ -110,14 +102,12 @@ getData('https://roguard.hackout.ro/checkVote/' + domain)
 				}
 				// verificam INDEPENDENT daca a votat deja si trimitem intr-un nou message:
 				else if(voted === true){ // daca a votat deja
-					console.log("Voted Already on this domain: " + domain);
 					chrome.runtime.sendMessage({
 						action: 'voted',
 						value: issue // trimitem ca 'value' ce a votat
 					});
 				}
 				else{
-					console.log("No votes on this domain: " + domain);
 					chrome.runtime.sendMessage({
 						action: 'not_voted',
 						value: 0
@@ -137,7 +127,8 @@ function showModal(problema) {
 		dialog.close();
 		
 	})
-	dialog.showModal();	
+	//dialog.showModal();	
+	//commented for testing
 }
 
 

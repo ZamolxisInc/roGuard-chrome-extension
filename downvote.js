@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {///detecteaza clickul 
 	        var issue = selElem.options[ selElem.selectedIndex ].value;
 	        // create the url and data:
 			var data = createDATA(domainOut, issue, "");
-			var url = 'https:roguard.hackout.ro/voteDomain/';
+			var url = 'https://roguard.hackout.ro/voteDomain/';
 			// send the post request and check the response:
 			try{
 				postData(url, data)
