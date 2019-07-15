@@ -26,7 +26,7 @@ function getData(url = '') {
 
 
 // api check domain
-getData('https://roguard.hackout.ro/checkDomain/' + domain)
+getData('https://roguard.hackout.ro/api/checkDomain/' + domain)
   .then(data => {
 				//console.log(JSON.stringify(data));
 				var problema = data.problema;
@@ -87,7 +87,7 @@ getData('https://roguard.hackout.ro/checkDomain/' + domain)
 
 
 // api CHECK VOTE
-getData('https://roguard.hackout.ro/checkVote/' + domain)
+getData('https://roguard.hackout.ro/api/checkVote/' + domain)
   .then(data => 
    {
   				var connection = data.connection;

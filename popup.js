@@ -116,7 +116,7 @@ function vote(positive){//functia care se apeleaza la apasarea butoanelor
 			var data = "domain=" + outUrl +
 						"&issue=" + "clean" +
 						"&reason=" + "";
-			var url = 'https://roguard.hackout.ro/voteDomain/';
+			var url = 'https://roguard.hackout.ro/api/voteDomain/';
 			try{
 				postData(url, data)
 				.then(data => { votedUP(); });
