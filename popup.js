@@ -69,11 +69,16 @@ document.addEventListener('DOMContentLoaded', function() {///detecteaza clickul 
 chrome.storage.sync.get(['issue', 'domain','punctaj'], function(items) {
 		// extrag punctajul si issue dupa domain
 		 var body = document.body;
-		 if(items['punctaj'] != 0)
-			 document['getElementById']('myRange').value = items['punctaj'];
-		 else
-			 document['getElementById']('myRange').value = "5";
+		 if(items['punctaj'] != 0){
+		 	//document['getElementById']('myRange').value = items['punctaj'];
+			 barFunction( 1 - (items['punctaj']/10) );
+		 }
+		 else{
+		 	//document['getElementById']('myRange').value = "5";
+			 barFunction(0.5);
 		
+		 }
+
 	 	switch(items['issue']) {
 	 		// le-am reasezat in changeSTATE
 	 		case "no_connection"  : changeState("no_connection_state"); break;
@@ -226,7 +231,6 @@ function votedUP() {
 	vote_description.innerHTML = "Ati raportat acest site ca fiind: " +
 							"LEGITIM" + // aici trebuie creat dinamic
 							". Multumim pentru implicare!";
-
 }	
 
 function votedDOWN(issue) {
@@ -279,4 +283,50 @@ function refreshPage(){
 	  var code = 'window.location.reload();';
 	  chrome.tabs.executeScript(tab.id, {code: code});
 	});
+}
+
+
+// bar functionality here
+function barFunction(value) {
+	var bar = new ProgressBar.SemiCircle(document.getElementById('container'), {
+	  strokeWidth: 6,
+	  color: '#FFEA82',
+	  trailColor: '#eee',
+	  trailWidth: 1,
+	  easing: 'easeInOut',
+	  duration: 750,
+	  svgStyle: null,
+	  text: {
+	    value: '',
+	    alignToBottom: false
+	  },
+	  from: {color: '#ff0000'},
+	  to: {color: '#7FFF00'},
+	  // Set default step function for all animate calls
+	  step: (state, bar) => {
+	    bar.path.setAttribute('stroke', state.color);
+	    var value = Math.round(bar.value() * 100);
+	    if(0 < value && value < 20){
+	    	bar.setText("Foarte periculos!");
+	    }
+			else if(20 <= value && value < 40){
+	      bar.setText("Periculos!");
+	    }
+	    else if(40 <= value && value < 55){
+	    	bar.setText("Mediu!");
+	    }
+	    else if(55 <= value && value < 80){
+	      bar.setText("Ok!");
+	    }
+	    else{
+	       bar.setText("Safe!");
+	    }
+	    bar.text.style.color = state.color;
+	  }
+	});
+	bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+	bar.text.style.fontSize = '2rem';
+
+	bar.set(0); 
+	bar.animate(value);  // Number from 0.0 to 1.0
 }
