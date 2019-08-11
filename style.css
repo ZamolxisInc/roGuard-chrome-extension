@@ -1,6 +1,5 @@
-
 /* Modal Structure */
-
+ 
 html,
 body {
   font-family: 'Open Sans', sans-serif;
@@ -9,117 +8,167 @@ body {
   min-height: 300px;
   padding: 0;
   width: 284px;
+  background: #141b23;
   /*border-style: solid;
   border-width: 2px;
   border-color:red;*/
+}
+
+ 
+
+.modal-header {
+
+  align-items: center;
+
+  border-bottom: 0.5px solid #dadada;
+
+  background: #141b23;
 
 }
 
+ 
+
+.modal-content {
+
+  text-align: center;
+
+  padding: 0 10px;
+
+  padding-bottom:22px;
+
+  overflow-y: hidden;
+
+  background: #171e27;
+
+}
+
+ 
+
+ 
+
+.modal-icons {
+
+  border-top: 0.5px solid #dadada;
+
+  width: 100%;
+
+  background: #141b23;
+
+}
+
+.modal-footer {
+  position:relative;
+  width:100%;
+    height: 30px;
+    padding-bottom:0px;
+    background: #141b23;
+    box-shadow: 0px 6px 20px 0px #4a4a4a;
+    left: 0;
+    bottom: 0;
+  padding-top:8px;
+  padding-bottom:3px;
+  text-align: center;
+}
+ 
+#topNav {
+  float: left;
+  color: #ffffff;
+  text-align: left;
+  color: #ffffff;
+}
+ 
+/* pass meter */
 #container {
   margin: 20px;
   width: 200px;
   height: 100px;
 }
-
+ 
+/* style for ISSUE */
 .body-red{
-	-moz-box-shadow:    inset 0 0 10px #b05252;
+              -moz-box-shadow:    inset 0 0 10px #b05252;
    -webkit-box-shadow: inset 0 0 10px #b05252;
    box-shadow:         inset 0 0 45px #b05252;
-	
+             
 }
-
+ 
 .body-gray{
-	-moz-box-shadow:    inset 0 0 10px #6b6b6b;
+              -moz-box-shadow:    inset 0 0 10px #6b6b6b;
    -webkit-box-shadow: inset 0 0 10px #6b6b6b;
    box-shadow:         inset 0 0 45px #6b6b6b;
-	
+             
 }
-
+ 
 .body-white{
-	-moz-box-shadow:    inset 0 0 0px #b05252;
+              -moz-box-shadow:    inset 0 0 0px #b05252;
    -webkit-box-shadow: inset 0 0 0px #b05252;
    box-shadow:         inset 0 0 0px #b05252;
-	
+             
 }
-
-
+ 
+ 
 .body-green{
-	-moz-box-shadow:    inset 0 0 10px #bdffbd;
+              -moz-box-shadow:    inset 0 0 10px #bdffbd;
    -webkit-box-shadow: inset 0 0 10px #bdffbd;
    box-shadow:         inset 0 0 45px #bdffbd;
-	
+             
 }
-
+ 
 h1 {
   font-family: 'Helvetica', monospace;
   font-size: 22px;
   font-weight: 400;
   margin: 0;
-  color: #2f5876;
+  color: #ffffff/*#2f5876;*/
 }
-
+ 
 h2 {
   font-family: 'Helvetica', monospace;
   font-size: 18px;
   font-weight: 400;
   margin: 0;
-  color: #2f5876;
+  color: #ffffff/*#2f5876;*/
 }
-
+ 
 a:link,
 a:visited {
   color: #000000;
   outline: 0;
   text-decoration: none;
 }
-
+ 
 img {
   width: 20px;
 }
-
+ 
+#descriere, #vote_description {
+  color: #ffffff;
+}
+ 
 .settings{
    margin-top: 10px;
    margin-right: 10px;
    position:absolute;
    top:0;
    right:0;
-	
+             
 }
 .settings .fas {
   font-size: 15px;
   color: gray;
   padding-left:7px;
 }
-
+ 
 .settings .fas:hover {
   color: #2f9976;
 }
-
-.modal-header {
-  align-items: center;
-  border-bottom: 0.5px solid #dadada;
-}
-
-.modal-footer {
-	position:relative;
-	width:100%;
-    height: 30px;
-    padding-bottom:0px;
-    background: #eeeeeea1;
-    box-shadow: 0px 6px 20px 0px #4a4a4a;
-    left: 0;
-    bottom: 0;
-	padding-top:8px;
-	padding-bottom:3px;
-	
-	text-align: center;;
-}
+ 
 .modal-footer a {
-  
+ 
   text-align: center;
-  
+ 
 }
-
+ 
 .button {
   background-color: #2f5876;
   border: none;
@@ -132,69 +181,57 @@ img {
   padding-left:6%;
   padding-right:6%;
 }
-
-
-.modal-content {
-  text-align: center;
-  padding: 0 22px;
-  padding-bottom:22px;
-}
-
-.modal-icons {
-  border-top: 0.5px solid #dadada;
-  width: 100%;
-}
-
-
+ 
+ 
 .logo {
   padding: 7px;
 }
-
+ 
 .logo-icon {
   vertical-align: text-bottom;
   margin-right: 12px;
 }
-
+ 
 .version {
   color: #444;
   font-size: 18px;
 }
-
+ 
 .flex-container {
   display: flex;
   justify-content: space-between;
   padding: 10px 2px;
 }
-
+ 
 .flex {
   opacity: 1;
   transition: opacity 0.2s ease-in-out;
   width: 90%;
   text-align: center;
 }
-
+ 
 .flex:hover {
   opacity: 0.8;
 }
-
+ 
 .flex .tdown:hover {
     color: red;
 }
-
+ 
 .flex .tup:hover {
     color: green;
 }
-
+ 
 .flex .fas {
   font-size: 45px;
   color: #2f5876;
-  
+ 
 }
-
+ 
 .slidecontainer {
   width: 100%;
 }
-
+ 
 .slider {
   -webkit-appearance: none;
   width: 50%;
@@ -205,11 +242,11 @@ img {
   -webkit-transition: .2s;
   transition: opacity .2s;
 }
-
+ 
 .slider:hover {
   opacity: 1;
 }
-
+ 
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -218,15 +255,17 @@ img {
   background: black;
   cursor: pointer;
 }
-
+ 
 .slider::-moz-range-thumb {
   width: 25px;
   height: 25px;
   background: #4CAF50;
   cursor: pointer;
 }
+ 
+#container {
+  text-align: center;
+  display: inline-block;
+}
 
-
-
-
-
+ 

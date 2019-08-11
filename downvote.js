@@ -38,15 +38,21 @@ document.addEventListener('DOMContentLoaded', function() {///detecteaza clickul 
 			try{
 				postData(url, data)
 					.then(data => {
-						alert("We have registred your vote !!!!!");
-                    })
+						console.log("vote registered");
+                         window.history.back();
+                    });
 			}
 			catch(error){ 
 				alert("Post failed. Returning to initial page..."); 
 			}
 			// revenim la html-ul initial
-			location.href="popup.html";
-
+            try{
+                //location.replace("popup.html");
+               
+                console.log("de ce nu merge??");
+            }catch(error){
+                console.log(error);
+            }
     });
 });
 
