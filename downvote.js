@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {///detecteaza clickul 
 			// revenim la html-ul initial
             try{
                 //location.replace("popup.html");
-               
+                refreshPage();
                 console.log("de ce nu merge??");
             }catch(error){
                 console.log(error);
@@ -96,4 +96,13 @@ function postData(url = '', data = {}) {
     .then(response => response.json()) // parses JSON response into native JavaScript objects 
     //.then(response => console.log("POST: Success"))
     .catch(error => console.error("POST: Failed to send post request to server"));
+}
+
+function refreshPage(){
+  sleep(1000);
+  chrome.tabs.getSelected(null, function(tab) {
+    var code = 'window.location.reload();';
+    chrome.tabs.executeScript(tab.id, {code: code});
+  });
+  window.close();
 }

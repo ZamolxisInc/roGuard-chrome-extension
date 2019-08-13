@@ -134,6 +134,7 @@ function vote(positive){//functia care se apeleaza la apasarea butoanelor
                }
          }
          votedUP();
+         refreshPage();
          // else nu mai afisam nimic daca apasa pe UP si votase deja up
 	  }
 	  else if(positive === false){
@@ -233,8 +234,7 @@ function votedUP() {
 	  document['getElementById']('upvoteButton').style.color = "green";
 	  document['getElementById']('downvoteButton').style.color = "";
 	  vote_description.innerHTML = "Ati raportat acest site ca fiind: " +
-                                 "LEGITIM" + // aici trebuie creat dinamic
-                             	". Multumim pentru implicare!";
+                                 "LEGITIM" ; // aici trebuie creat dinamic;
 }            
  
 function votedDOWN(issue) {
@@ -243,8 +243,7 @@ function votedDOWN(issue) {
 	  document['getElementById']('upvoteButton').style.color = "";
 	  document['getElementById']('downvoteButton').style.color = "red";
 	  vote_description.innerHTML = "Ati raportat acest site ca fiind: " +
-                                     issue + // aici trebuie creat dinamic
-                                     ". Multumim pentru implicare!";
+                                     issue; // aici trebuie creat dinamic
 }            
  
  
@@ -283,10 +282,11 @@ function sleep(milliseconds) {
  
 function refreshPage(){
   sleep(1000);
-                 chrome.tabs.getSelected(null, function(tab) {
+  chrome.tabs.getSelected(null, function(tab) {
     var code = 'window.location.reload();';
     chrome.tabs.executeScript(tab.id, {code: code});
   });
+  window.close();
 }
  
  
