@@ -8,7 +8,7 @@ body {
   min-height: 300px;
   padding: 0;
   width: 284px;
-  background: #141b23;
+  background: #E5E5E5;
   /*border-style: solid;
   border-width: 2px;
   border-color:red;*/
@@ -19,7 +19,7 @@ body {
 .modal-header {
   align-items: center;
   border-bottom: 0.5px solid #dadada;
-  background: #141b23;
+  background: #E5E5E5;
 }
 
  
@@ -29,7 +29,7 @@ body {
   padding: 0 10px;
   padding-bottom:22px;
   overflow-y: hidden;
-  background: #171e27;
+  background: #E5E5E5;
 }
 
  
@@ -37,7 +37,7 @@ body {
 .modal-icons {
   border-top: 0.5px solid #dadada;
   width: 100%;
-  background: #141b23;
+  background: #E5E5E5;
 }
 
 .modal-footer {
@@ -45,7 +45,7 @@ body {
   width:100%;
     height: 30px;
     padding-bottom:0px;
-    background: #141b23;
+    background: #E5E5E5;
     box-shadow: 0px 6px 20px 0px #4a4a4a;
     left: 0;
     bottom: 0;
@@ -247,10 +247,11 @@ img {
   display: inline-block;
 }
 
+ 
 
 
+ /* ====== S E T T I N G S ====== */
 
-/* ====== S E T T I N G S ====== */
 .sidebar {
   height: 0;
   width: 100%;
@@ -258,7 +259,7 @@ img {
   /*z-index: 1;*/
   /*top: 0;
   left: 0;*/
-  background-color: #141b23;
+  background-color: #E5E5E5;
   overflow-x: hidden;
   overflow-y: hidden;
   transition: 0.5s;
@@ -268,7 +269,7 @@ img {
 .sidebar a {
   padding: 8px 8px 8px 8px;
   text-decoration: none;
-  font-size: 8px;
+  font-size: 10px;
   color: #818181;
   display: block;
   transition: 0.3s;

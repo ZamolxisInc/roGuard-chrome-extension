@@ -63,7 +63,7 @@ getData('https://roguard.hackout.ro/api/checkDomain/' + domain)
 						});
 						
 						showModal(problema);	
-					}
+				}
 
 				else if(isIssueReceived === 0){
 					chrome.runtime.sendMessage({

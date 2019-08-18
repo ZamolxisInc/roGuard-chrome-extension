@@ -1,10 +1,12 @@
 /*TODOs
-1. votez up/down si imediat dupa vreau sa schimb, nu merge
+1''. votez up/down si imediat dupa vreau sa schimb, nu merge
 2. cand site-ul e neutru se vede meniul
 3. bug la alt_motiv*/
 var outUrl;
 var state;
 var voteState = "not_voted";//voted_up voted_down sau not_voted
+var theme;
+var showAlertVar = true;
 // state il folosim ca sa stim ce elemente sa afisam in functie de issue
 // votestate il folosim ca sa retinem dupa ce facem checkVote daca a votat
 contorVotUP = 0;
@@ -25,6 +27,11 @@ chrome.windows.getCurrent(function(window) {
     });
 });
  
+
+// theme:
+chrome.storage.sync.get("theme", function(theme_) {
+	loadTheme(theme_.theme);
+});
  
 // butoane de vot:
 document.addEventListener('DOMContentLoaded', function() {///detecteaza clickul pe voteUp
@@ -65,8 +72,13 @@ document.addEventListener('DOMContentLoaded', function() {///detecteaza clickul 
 });
  
 document.addEventListener('DOMContentLoaded', function() {
-    var link2 = document.getElementById('settingsIcon');
-    link2.addEventListener('click', changeNav);    
+    var link1 = document.getElementById('settingsIcon');
+    var link2 = document.getElementById('change-theme');
+    var link3 = document.getElementById('show-alerts');
+
+    link1.addEventListener('click', changeNav);
+    link2.addEventListener('change', changeTheme);
+    link3.addEventListener('click', showAlert);    
 });
  
  
@@ -248,8 +260,6 @@ function votedDOWN(issue) {
  
  
  
- 
- 
 // post {domain:..., issue:..., reason:...}
 function postData(url = '', data = {}) {
   // Default options are marked with *
@@ -356,6 +366,58 @@ function changeNav() {
               else openNav();
 }
 
-function changeTheme(theme) {
-              // TODO
+
+
+
+function changeTheme() {
+    if (document.getElementById("change-theme").checked == false) {
+    	// dark -> white
+    	changeCSS("style_white.css", 1);
+    	// save the option:
+    	chrome.storage.sync.set({ "theme" : "white" }, function() {});
+    } 
+    else {
+    	// dark -> white
+    	changeCSS("style.css", 1);
+    	// save the option:
+    	chrome.storage.sync.set({ "theme" : "dark" }, function() {
+    	});
+    }
+}
+
+
+function loadTheme(t) {
+    if (t == "white") {
+    	// dark -> white
+    	changeCSS("style_white.css", 1);
+    	// save the option:
+    	chrome.storage.sync.set({ "theme" : "white" }, function() {});
+    } 
+    else if (t == "dark"){
+    	// dark -> white
+    	changeCSS("style.css", 1);
+    	// save the option:
+    	chrome.storage.sync.set({ "theme" : "dark" }, function() {});
+    	document.getElementById("change-theme").checked = true;
+    }
+}
+
+
+
+function showAlert() {
+    // TODO
+    alert("showAlert not ready....");
+}
+
+
+function changeCSS(cssFile, cssLinkIndex) {
+	// index 0
+    var oldlink = document.getElementsByTagName("link").item(cssLinkIndex);
+
+    var newlink = document.createElement("link");
+    newlink.setAttribute("rel", "stylesheet");
+    newlink.setAttribute("type", "text/css");
+    newlink.setAttribute("href", cssFile);
+
+    document.getElementsByTagName("head").item(0).replaceChild(newlink, oldlink);
 }
