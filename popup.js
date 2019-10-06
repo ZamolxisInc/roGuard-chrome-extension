@@ -1,7 +1,5 @@
 /*TODOs
-1''. votez up/down si imediat dupa vreau sa schimb, nu merge
-2. cand site-ul e neutru se vede meniul
-3. bug la alt_motiv*/
+*/
 var outUrl;
 var state;
 var voteState = "not_voted";//voted_up voted_down sau not_voted
@@ -31,6 +29,13 @@ chrome.windows.getCurrent(function(window) {
 // theme:
 chrome.storage.sync.get("theme", function(theme_) {
 	loadTheme(theme_.theme);
+});
+
+// show alerts:
+chrome.storage.sync.get("alerts", function(alert_) {
+	showAlertVar = alert_.alerts;
+	if (showAlertVar == true) document.getElementById("show-alerts").checked = true; 
+	if (showAlertVar == false)document.getElementById("show-alerts").checked = false; 
 });
  
 // butoane de vot:
@@ -71,6 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {///detecteaza clickul 
     });     
 });
  
+// listeners
 document.addEventListener('DOMContentLoaded', function() {
     var link1 = document.getElementById('settingsIcon');
     var link2 = document.getElementById('change-theme');
@@ -405,8 +411,13 @@ function loadTheme(t) {
 
 
 function showAlert() {
-    // TODO
-    alert("showAlert not ready....");
+    var box = document.getElementById("show-alerts");
+    if (box.checked == true) {
+    	chrome.storage.sync.set({ "alerts" : "show" }, function() {});
+    }
+    else if (box.checked == false) {
+    	chrome.storage.sync.set({ "alerts" : "not_show" }, function() {});
+    }
 }
 
 
